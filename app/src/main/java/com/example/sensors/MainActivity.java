@@ -7,75 +7,69 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
-    // Step 1: Declare variables
-    SensorManager sensorManager;
-    Sensor accelerometer, lightSensor, proximitySensor;
-
-    TextView tvAccelerometer, tvLight, tvProximity;
+    private SensorManager sensorManager;
+    private Sensor accelerometer, lightSensor, proximitySensor;
+    private TextView tvAccelerometer, tvLight, tvProximity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Step 2: Connect TextViews to XML
         tvAccelerometer = findViewById(R.id.tvAccelerometer);
         tvLight         = findViewById(R.id.tvLight);
         tvProximity     = findViewById(R.id.tvProximity);
 
-        // Step 3: Get the SensorManager system service
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        // Step 4: Get each sensor
-        accelerometer  = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        lightSensor    = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        if (sensorManager != null) {
+            accelerometer  = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            lightSensor    = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+            proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        }
     }
 
-    // Step 5: Register sensors when app is visible
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, accelerometer,  SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, lightSensor,    SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+        if (accelerometer != null) {
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        }
+        if (lightSensor != null) {
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_UI);
+        }
+        if (proximitySensor != null) {
+            sensorManager.registerListener(this, proximitySensor, SensorManager.SENSOR_DELAY_UI);
+        }
     }
 
-    // Step 6: Unregister sensors when app is paused (saves battery)
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
     }
 
-    // Step 7: This method is called automatically when sensor data changes
     @Override
     public void onSensorChanged(SensorEvent event) {
-
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
-            tvAccelerometer.setText("X: " + x + "  Y: " + y + "  Z: " + z);
-        }
-
-        if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+            tvAccelerometer.setText(String.format(Locale.getDefault(), "X: %.2f  Y: %.2f  Z: %.2f", x, y, z));
+        } else if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             float light = event.values[0];
-            tvLight.setText("Light: " + light + " lx");
-        }
-
-        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+            tvLight.setText(String.format(Locale.getDefault(), "%.1f lx", light));
+        } else if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
             float proximity = event.values[0];
-            tvProximity.setText("Proximity: " + proximity + " cm");
+            tvProximity.setText(String.format(Locale.getDefault(), "%.1f cm", proximity));
         }
     }
 
-    // Step 8: Required method - we don't need it but must include it
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Not used
     }
 }

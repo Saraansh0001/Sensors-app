@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">sensors</string>
+    <string name="app_name">Sensors</string>
+    <string name="accelerometer_title">Accelerometer</string>
+    <string name="accelerometer_desc">Measures acceleration force in m/s²</string>
+    <string name="light_title">Light Intensity</string>
+    <string name="light_desc">Measures ambient light level in lux</string>
+    <string name="proximity_title">Proximity</string>
+    <string name="proximity_desc">Measures distance to object in cm</string>
+    <string name="default_accel">X: 0.00  Y: 0.00  Z: 0.00</string>
+    <string name="default_light">0.0 lx</string>
+    <string name="default_proximity">0.0 cm</string>
+    <string name="sensor_dashboard">Sensor Dashboard</string>
 </resources>
