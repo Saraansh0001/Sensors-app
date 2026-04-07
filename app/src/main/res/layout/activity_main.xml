@@ -15,6 +15,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="@string/sensor_dashboard"
@@ -40,7 +41,6 @@
 
             <!-- Accelerometer Card -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAccelerometer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -71,8 +71,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@color/accel_bg"
                                 android:backgroundTint="@color/accel_main"
-                                android:alpha="0.12"
-                                android:importantForAccessibility="no" />
+                                android:alpha="0.12" />
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
@@ -98,7 +97,6 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/tvAccelSubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/accel_subtitle"
@@ -124,7 +122,6 @@
 
             <!-- Light Intensity Card -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardLight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -155,8 +152,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@color/light_bg"
                                 android:backgroundTint="@color/light_main"
-                                android:alpha="0.12"
-                                android:importantForAccessibility="no" />
+                                android:alpha="0.12" />
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
@@ -182,7 +178,6 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/tvLightSubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/light_subtitle"
@@ -207,7 +202,6 @@
 
             <!-- Proximity Card -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardProximity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -238,8 +232,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@color/proximity_bg"
                                 android:backgroundTint="@color/proximity_main"
-                                android:alpha="0.12"
-                                android:importantForAccessibility="no" />
+                                android:alpha="0.12" />
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
@@ -265,7 +258,6 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/tvProximitySubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/proximity_subtitle"

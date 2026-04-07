@@ -5,7 +5,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
@@ -15,7 +14,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accelerometer, lightSensor, proximitySensor;
     private TextView tvAccelerometer, tvLight, tvProximity;
-    private TextView tvAccelSubtitle, tvLightSubtitle, tvProximitySubtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,42 +24,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         tvAccelerometer = findViewById(R.id.tvAccelerometer);
         tvLight         = findViewById(R.id.tvLight);
         tvProximity     = findViewById(R.id.tvProximity);
-        
-        tvAccelSubtitle = findViewById(R.id.tvAccelSubtitle);
-        tvLightSubtitle = findViewById(R.id.tvLightSubtitle);
-        tvProximitySubtitle = findViewById(R.id.tvProximitySubtitle);
 
+        // Get SensorManager
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         if (sensorManager != null) {
-            accelerometer  = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            lightSensor    = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+            // Get specific sensors as per question requirement
+            accelerometer   = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            lightSensor     = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
             proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         }
 
-        // Check for sensor availability and update UI
-        updateSensorAvailability();
+        // Initial check for sensor availability
+        checkAvailability();
     }
 
-    private void updateSensorAvailability() {
-        if (accelerometer == null) {
-            tvAccelerometer.setText(R.string.status_unavailable);
-            tvAccelerometer.setAlpha(0.5f);
-        }
-        if (lightSensor == null) {
-            tvLight.setText(R.string.status_unavailable);
-            tvLight.setAlpha(0.5f);
-        }
-        if (proximitySensor == null) {
-            tvProximity.setText(R.string.status_unavailable);
-            tvProximity.setAlpha(0.5f);
-        }
+    private void checkAvailability() {
+        if (accelerometer == null) tvAccelerometer.setText(R.string.status_unavailable);
+        if (lightSensor == null) tvLight.setText(R.string.status_unavailable);
+        if (proximitySensor == null) tvProximity.setText(R.string.status_unavailable);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (sensorManager != null) {
+            // Register listeners for required sensors
             if (accelerometer != null) {
                 sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
             }
@@ -78,36 +66,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onPause() {
         super.onPause();
         if (sensorManager != null) {
+            // Unregister to save battery
             sensorManager.unregisterListener(this);
         }
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        int sensorType = event.sensor.getType();
+        int type = event.sensor.getType();
         
-        switch (sensorType) {
-            case Sensor.TYPE_ACCELEROMETER:
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
-                tvAccelerometer.setText(String.format(Locale.getDefault(), "X: %.2f  Y: %.2f  Z: %.2f", x, y, z));
-                break;
-                
-            case Sensor.TYPE_LIGHT:
-                float light = event.values[0];
-                tvLight.setText(String.format(Locale.getDefault(), "%.1f lx", light));
-                break;
-                
-            case Sensor.TYPE_PROXIMITY:
-                float proximity = event.values[0];
-                tvProximity.setText(String.format(Locale.getDefault(), "%.1f cm", proximity));
-                break;
+        if (type == Sensor.TYPE_ACCELEROMETER) {
+            tvAccelerometer.setText(String.format(Locale.getDefault(), 
+                "X: %.2f  Y: %.2f  Z: %.2f", event.values[0], event.values[1], event.values[2]));
+        } else if (type == Sensor.TYPE_LIGHT) {
+            tvLight.setText(String.format(Locale.getDefault(), "%.1f lx", event.values[0]));
+        } else if (type == Sensor.TYPE_PROXIMITY) {
+            tvProximity.setText(String.format(Locale.getDefault(), "%.1f cm", event.values[0]));
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Can be used to show sensor health/accuracy if needed
+        // Not required for basic display
     }
 }
