@@ -2,11 +2,26 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#6750A4</color>
-    <color name="primary_container">#EADDFF</color>
-    <color name="secondary">#625B71</color>
-    <color name="surface">#FEF7FF</color>
-    <color name="outline">#79747E</color>
-    <color name="text_title">#1C1B1F</color>
-    <color name="text_body">#49454F</color>
+
+    <!-- Professional Dashboard Palette -->
+    <color name="app_bg">#F4F7FE</color>
+    <color name="card_bg">#FFFFFF</color>
+
+    <color name="primary_accent">#4318FF</color>
+    <color name="secondary_accent">#6AD2FF</color>
+
+    <color name="text_primary">#1B2559</color>
+    <color name="text_secondary">#A3AED0</color>
+
+    <!-- Sensor Specific Accents -->
+    <color name="accel_main">#4318FF</color>
+    <color name="accel_bg">#F4F7FE</color>
+
+    <color name="light_main">#FFB547</color>
+    <color name="light_bg">#FFF8ED</color>
+
+    <color name="proximity_main">#01B574</color>
+    <color name="proximity_bg">#E6FAF5</color>
+
+    <color name="border_color">#E0E5F2</color>
 </resources>
